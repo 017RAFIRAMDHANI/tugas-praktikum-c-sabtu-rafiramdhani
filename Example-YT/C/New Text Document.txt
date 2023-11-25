@@ -1,0 +1,30 @@
+Sudah ada array A Satu Dimensi yang dibuat denganint A[11]. Belum ada isinya 
+dengan ilustrasi sebagai berikut :
+A [ ]
+Dalam dokumen ada data tertulis dengan urutan sebagai berikut : 
+12, 15, 7, 10, 5, 2, 17, 25, 9, 20, 35, 28, 14, 11, 999
+(999 sebagai End Of Data)
+Susun program (penggalan program) untuk menginput data dalam dokumen 
+diatas, satu persatu (mulai dari urutan paling kiri) dan menyimpannya kedalam 
+array sehingga isi array menjadi :
+a. A [ 12 |  |  7 |  | 5 |   | 17 |   | 9 |  | 35 ]
+b. A [ 12 | 15 |   | 10 |   |   | 17 | 25  |   | 20 | 35 ]
+Yang disimpan hanya bila data yang diinput bernilai lebih besar dari 9.
+Disimpan sesuai dengan urutan letak data dalam dokumen, Diinput sebatas 
+data yang ada dan sebatas tempat array yang tersedia.
+c. A
+Yang disimpan hanya bila data yang diinput bernilai lebih besar dari 9.
+Disimpan berderetan di dalam array, Diinput sebatas data yang ada dan 
+sebatas tempat array yang tersedia.
+12 7 5 17 9 35
+12 15 10 17 25 20 35
+12 15 10 17 25 20 35 28 14 11
+d. A
+Yang disimpan hanya nilai yang diinput bernilai ganjil. Nilai yang diinput
+sebatas nilai yang ada, dan sebatas tempat yang tersedia Nilai 999 hanya 
+sebagai batas, tidak ikut disimpan
+e. A
+Yang disimpan hanya bila data yang diinput yang bernilai ganjil. Disimpan 
+dalam array sesuai dengan tata letak (urutannya) dalam okumen. Nilai yang 
+diinput sebatas nilai yang ada, dan sebatas tempat yang tersedia Nilai 999 
+hanya sebagai batas, tidak ikut disimpa
