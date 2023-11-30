@@ -1,47 +1,78 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_SIZE 6
 
 int main() {
-    int A[11] = {0}; // Array dengan ukuran 11, diinisialisasi dengan 0
-    int input, i = 0;
-    int isFirstElement = 1; // Menandakan apakah elemen pertama
+    // Array yang dapat menyimpan baik angka maupun string
+    void **A = malloc(MAX_SIZE * sizeof(void*));
 
-    printf("Masukkan data (akhiri dengan 999):\n");
+    char input[200]; // String untuk menyimpan input
 
-    // Menggunakan loop untuk menginput data sampai menemui 999
-    do {
-        scanf("%d", &input);
+    printf("Masukkan data (akhiri dengan 999):\nNOTE : Jika data ingin kosong pada baris ke N ketikan NULL\n");
 
-        // Memeriksa apakah input bukan 999 sebelum menyimpan ke dalam array
-        if (input != 999) {
-            A[i] = input;
-            i++;
-            isFirstElement = 0; // Setel isFirstElement menjadi 0 karena sudah mencetak elemen pertama
-        } else {
-            break;
+    int i = 0;
+    int skipped = 0; // Variabel untuk melacak jumlah elemen yang diabaikan
+
+    while (1) {
+        // Memeriksa apakah pengguna melewatkan input di baris ke-N
+        if (scanf("%s", input) != 1) {
+            skipped++; // Menambah jumlah elemen yang diabaikan
+            continue; // Melanjutkan ke iterasi berikutnya
         }
-    } while (i < 11);
+
+        if (strcmp(input, "999") == 0) {
+            break; // Keluar dari loop jika input adalah "999"
+        }
+
+        // Malloc digunakan untuk mengalokasikan memori dinamis untuk string "NULL"
+        if (strcmp(input, "NULL") == 0) {
+            A[i] = malloc(strlen("NULL") + 1);
+            strcpy((char*)A[i], "NULL");
+        } else {
+            // Jika input adalah angka, konversi ke integer dan simpan di dalam array
+            char *endptr;
+            int value = strtol(input, &endptr, 10);
+            if (*endptr == '\0') {
+                A[i] = malloc(sizeof(int));
+                *(int*)A[i] = value;
+            } else {
+                printf("Input tidak valid, masukkan angka atau 'NULL' atau 999 untuk keluar.\n");
+                continue; // Ulangi loop jika input tidak valid
+            }
+        }
+
+        i++;
+        if (i + skipped >= MAX_SIZE) {
+            // Mengalokasikan lebih banyak memori jika array hampir penuh
+            void* temp = realloc(A, (MAX_SIZE + 5) * sizeof(void*));
+            if (temp == NULL) {
+                fprintf(stderr, "Gagal mengalokasikan memori.\n");
+                exit(EXIT_FAILURE);
+            }
+            A = temp;
+        }
+    }
 
     // Menampilkan isi array setelah diinput
-    printf("Isi array A: [ ");
-    int j = 0;
-    while (j < i) {
-        printf("%d", A[j]);
-
-        // Menambahkan garis vertikal setelah elemen ke-1, ke-3, ke-5, dst.
-        if (j +1) {
-            printf(" | ");
+    printf("Hasil output:\n");
+    int j;
+    for (  j = 0; j < i; ++j) {
+        if (A[j] == NULL) {
+            printf("NULL ADALAH INDEX KE %d\n", j + skipped);
+        } else if (strcmp((char*)A[j], "NULL") == 0) {
+            printf("NULL ADALAH INDEX KE %d\n", j + skipped);
+        } else {
+            printf("%d ADALAH INDEX KE %d\n", *(int*)A[j], j + skipped);
         }
 
-        j++;
+        // Setelah selesai, free memori yang dialokasikan untuk setiap elemen
+        free(A[j]);
     }
 
-    // Menambahkan elemen 0 pada indeks yang belum terisi
-    while (j < 11) {
-        A[j] = 0;
-        j++;
-    }
-
-    printf(" ]\n");
+    // Free memori yang dialokasikan untuk array
+    free(A);
 
     return 0;
 }

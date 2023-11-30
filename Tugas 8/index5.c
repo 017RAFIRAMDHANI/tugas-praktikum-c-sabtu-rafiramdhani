@@ -1,38 +1,59 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_SIZE 6
 
 int main() {
-    int A[11] = {0}; // Array dengan ukuran 11, diinisialisasi dengan 0
-    int input, i = 0;
+    void **A = malloc(MAX_SIZE * sizeof(void*));
+    char input[200];
 
-    printf("Masukkan data (akhiri dengan 999):\n");
+    printf("Masukkan data (akhiri dengan 999):\nNOTE : Jika data ingin kosong pada baris ke N ketikan NULL\n");
 
-    // Menggunakan loop tanpa batasan untuk menginput data
+    int i = 0;
+    int skipped = 0;
+
     while (1) {
-        scanf("%d", &input);
+        if (scanf("%s", input) != 1) {
+            skipped++;
+            continue;
+        }
 
-        // Memeriksa apakah input adalah nilai ganjil, bukan 999, dan masih ada tempat dalam array
-        if (input != 999) {
-            if (input % 2 != 0 && i < 11) {
-                A[i] = input;
+        if (strcmp(input, "999") == 0) {
+            break;
+        }
+
+        if (strcmp(input, "NULL") == 0) {
+            A[i] = malloc(strlen("NULL") + 1);
+            strcpy((char*)A[i], "NULL");
+        } else {
+            int value = atoi(input);
+            if (value % 2 != 0 || (value == 0 && strcmp(input, "0") == 0)) {
+                A[i] = malloc(sizeof(int));
+                *(int*)A[i] = value;
                 i++;
             }
-        } else {
-            break; // Hentikan loop jika input adalah 999
+        }
+
+        if (i + skipped >= MAX_SIZE) {
+            void* temp = realloc(A, (MAX_SIZE + 5) * sizeof(void*));
+            if (temp == NULL) {
+                fprintf(stderr, "Gagal mengalokasikan memori.\n");
+                exit(EXIT_FAILURE);
+            }
+            A = temp;
         }
     }
 
-    // Menampilkan isi array setelah diinput
-    printf("Isi array A: [ ");
+    printf("Hasil output:\n");
     int j;
-    for ( j = 0; j < i; j++) {
-        printf("%d", A[j]);
-
-        // Menambahkan garis vertikal setelah elemen ke-1, ke-3, ke-5, dst.
-        if (j < i - 1) {
-            printf(" | ");
+    for (j = 0; j < i; ++j) {
+        if (A[j] != NULL && strcmp((char*)A[j], "NULL") != 0) {
+            printf("%d ADALAH INDEX KE %d\n", *(int*)A[j], j + skipped);
         }
     }
-    printf(" ]\n");
+
+    free(A);
 
     return 0;
 }
