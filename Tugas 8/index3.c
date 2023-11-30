@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
- 
+  
 #define MAX_SIZE 6
 
 int main() {
