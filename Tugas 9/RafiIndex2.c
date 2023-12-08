@@ -2,7 +2,7 @@
 
 int main() {
     // Inisialisasi array A dengan karakter tertentu
-    char A[] = {'S', 'T', 'T', 'M', 'A', 'N', 'D', 'A', 'L', 'A'};
+     char A[] = {'S', 'T', 'T', 'M', 'A', 'N', 'D', 'A', 'L', 'A'};
     char C;
     int count = 0;
 

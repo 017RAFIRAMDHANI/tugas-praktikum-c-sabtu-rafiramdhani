@@ -1,8 +1,8 @@
 #include <stdio.h>
-
+ 
 int main() {
     // Inisialisasi array A dengan nilai tertentu
-    int A[] = {12, 17, 10, 5, 15, 25, 11, 7, 25, 16, 19};
+     int A[] = {12, 17, 10, 5, 15, 25, 11, 7, 25, 16, 19};
     int N;
 
     // Input nilai N dari pengguna
