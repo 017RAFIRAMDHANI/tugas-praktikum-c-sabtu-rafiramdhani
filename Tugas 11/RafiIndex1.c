@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+ 
 int main() {
     int A[12] = {60, 80, 55, 90, 75, 40, 50, 85, 70, 65, 45, 55};
     int B[12], C[12];
@@ -44,7 +44,7 @@ int main() {
     for (  i5 = 0; i5 < countC; i5++) {
         printf("%d ", C[i5]);
     }
-
+    
     printf("\n");
     return 0;
 }
